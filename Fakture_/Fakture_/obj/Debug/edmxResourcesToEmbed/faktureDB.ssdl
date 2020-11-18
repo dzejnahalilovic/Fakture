@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="faktureDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="DetaljiFakture1">
+    <Key>
+      <PropertyRef Name="Faktura" />
+      <PropertyRef Name="Proizvod" />
+    </Key>
+    <Property Name="Faktura" Type="int" Nullable="false" />
+    <Property Name="Proizvod" Type="int" Nullable="false" />
+    <Property Name="Cijena" Type="money" />
+    <Property Name="Kolicina" Type="int" />
+    <Property Name="Popust" Type="int" />
+    <Property Name="Ukupno" Type="money" />
+  </EntityType>
+  <EntityType Name="Faktura1">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BrojFakture" Type="int" Nullable="false" />
+    <Property Name="DatumKreiranja" Type="date" Nullable="false" />
+    <Property Name="DatumDospijeca" Type="date" Nullable="false" />
+    <Property Name="Korisnik" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Korisnik">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Ime" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Prezime" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="KorisnickoIme" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Lozinka" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Telefon" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Uloga" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Popust1">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Popust" Type="int" />
+  </EntityType>
+  <EntityType Name="Proizvod">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Naziv" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Uloga">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Naziv" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Status" Type="tinyint" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__DetaljiFa__Faktu__4222D4EF">
+    <End Role="Faktura1" Type="Self.Faktura1" Multiplicity="1" />
+    <End Role="DetaljiFakture1" Type="Self.DetaljiFakture1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Faktura1">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DetaljiFakture1">
+        <PropertyRef Name="Faktura" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DetaljiFa__Popus__440B1D61">
+    <End Role="Popust1" Type="Self.Popust1" Multiplicity="0..1" />
+    <End Role="DetaljiFakture1" Type="Self.DetaljiFakture1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Popust1">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DetaljiFakture1">
+        <PropertyRef Name="Popust" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DetaljiFa__Proiz__4316F928">
+    <End Role="Proizvod" Type="Self.Proizvod" Multiplicity="1" />
+    <End Role="DetaljiFakture1" Type="Self.DetaljiFakture1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Proizvod">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DetaljiFakture1">
+        <PropertyRef Name="Proizvod" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Faktura1__Korisn__398D8EEE">
+    <End Role="Korisnik" Type="Self.Korisnik" Multiplicity="1" />
+    <End Role="Faktura1" Type="Self.Faktura1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Korisnik">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Faktura1">
+        <PropertyRef Name="Korisnik" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Korisnik__Uloga__267ABA7A">
+    <End Role="Uloga" Type="Self.Uloga" Multiplicity="1" />
+    <End Role="Korisnik" Type="Self.Korisnik" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Uloga">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Korisnik">
+        <PropertyRef Name="Uloga" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="faktureDBModelStoreContainer">
+    <EntitySet Name="DetaljiFakture1" EntityType="Self.DetaljiFakture1" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Faktura1" EntityType="Self.Faktura1" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Korisnik" EntityType="Self.Korisnik" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Popust1" EntityType="Self.Popust1" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Proizvod" EntityType="Self.Proizvod" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Uloga" EntityType="Self.Uloga" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__DetaljiFa__Faktu__4222D4EF" Association="Self.FK__DetaljiFa__Faktu__4222D4EF">
+      <End Role="Faktura1" EntitySet="Faktura1" />
+      <End Role="DetaljiFakture1" EntitySet="DetaljiFakture1" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DetaljiFa__Popus__440B1D61" Association="Self.FK__DetaljiFa__Popus__440B1D61">
+      <End Role="Popust1" EntitySet="Popust1" />
+      <End Role="DetaljiFakture1" EntitySet="DetaljiFakture1" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DetaljiFa__Proiz__4316F928" Association="Self.FK__DetaljiFa__Proiz__4316F928">
+      <End Role="Proizvod" EntitySet="Proizvod" />
+      <End Role="DetaljiFakture1" EntitySet="DetaljiFakture1" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Faktura1__Korisn__398D8EEE" Association="Self.FK__Faktura1__Korisn__398D8EEE">
+      <End Role="Korisnik" EntitySet="Korisnik" />
+      <End Role="Faktura1" EntitySet="Faktura1" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Korisnik__Uloga__267ABA7A" Association="Self.FK__Korisnik__Uloga__267ABA7A">
+      <End Role="Uloga" EntitySet="Uloga" />
+      <End Role="Korisnik" EntitySet="Korisnik" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

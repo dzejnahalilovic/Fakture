@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="faktureDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Korisnik">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Ime" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Prezime" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="KorisnickoIme" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Lozinka" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Telefon" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Uloga" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Uloga1" Relationship="Self.FK__Korisnik__Uloga__267ABA7A" FromRole="Korisnik" ToRole="Uloga" />
+    <NavigationProperty Name="Faktura1" Relationship="faktureDBModel.FK__Faktura1__Korisn__398D8EEE" FromRole="Korisnik" ToRole="Faktura1" />
+  </EntityType>
+  <EntityType Name="Proizvod">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Naziv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="DetaljiFakture1" Relationship="faktureDBModel.FK__DetaljiFa__Proiz__4316F928" FromRole="Proizvod" ToRole="DetaljiFakture1" />
+  </EntityType>
+  <EntityType Name="Uloga">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Naziv" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Status" Type="Byte" Nullable="false" />
+    <NavigationProperty Name="Korisniks" Relationship="Self.FK__Korisnik__Uloga__267ABA7A" FromRole="Uloga" ToRole="Korisnik" />
+  </EntityType>
+  <Association Name="FK__Korisnik__Uloga__267ABA7A">
+    <End Role="Uloga" Type="Self.Uloga" Multiplicity="1" />
+    <End Role="Korisnik" Type="Self.Korisnik" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Uloga">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Korisnik">
+        <PropertyRef Name="Uloga" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="faktureDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Korisniks" EntityType="Self.Korisnik" />
+    <EntitySet Name="Proizvods" EntityType="Self.Proizvod" />
+    <EntitySet Name="Ulogas" EntityType="Self.Uloga" />
+    <AssociationSet Name="FK__Korisnik__Uloga__267ABA7A" Association="Self.FK__Korisnik__Uloga__267ABA7A">
+      <End Role="Uloga" EntitySet="Ulogas" />
+      <End Role="Korisnik" EntitySet="Korisniks" />
+    </AssociationSet>
+    <EntitySet Name="Faktura1" EntityType="faktureDBModel.Faktura1" />
+    <EntitySet Name="Popust1" EntityType="faktureDBModel.Popust1" />
+    <AssociationSet Name="FK__Faktura1__Korisn__398D8EEE" Association="faktureDBModel.FK__Faktura1__Korisn__398D8EEE">
+      <End Role="Korisnik" EntitySet="Korisniks" />
+      <End Role="Faktura1" EntitySet="Faktura1" />
+    </AssociationSet>
+    <EntitySet Name="DetaljiFakture1" EntityType="faktureDBModel.DetaljiFakture1" />
+    <AssociationSet Name="FK__DetaljiFa__Faktu__4222D4EF" Association="faktureDBModel.FK__DetaljiFa__Faktu__4222D4EF">
+      <End Role="Faktura1" EntitySet="Faktura1" />
+      <End Role="DetaljiFakture1" EntitySet="DetaljiFakture1" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DetaljiFa__Popus__440B1D61" Association="faktureDBModel.FK__DetaljiFa__Popus__440B1D61">
+      <End Role="Popust1" EntitySet="Popust1" />
+      <End Role="DetaljiFakture1" EntitySet="DetaljiFakture1" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DetaljiFa__Proiz__4316F928" Association="faktureDBModel.FK__DetaljiFa__Proiz__4316F928">
+      <End Role="Proizvod" EntitySet="Proizvods" />
+      <End Role="DetaljiFakture1" EntitySet="DetaljiFakture1" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Faktura1">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BrojFakture" Type="Int32" Nullable="false" />
+    <Property Name="DatumKreiranja" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="DatumDospijeca" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Korisnik" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Korisnik1" Relationship="faktureDBModel.FK__Faktura1__Korisn__398D8EEE" FromRole="Faktura1" ToRole="Korisnik" />
+    <NavigationProperty Name="DetaljiFakture1" Relationship="faktureDBModel.FK__DetaljiFa__Faktu__4222D4EF" FromRole="Faktura1" ToRole="DetaljiFakture1" />
+  </EntityType>
+  <EntityType Name="Popust1">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Popust" Type="Int32" />
+    <NavigationProperty Name="DetaljiFakture1" Relationship="faktureDBModel.FK__DetaljiFa__Popus__440B1D61" FromRole="Popust1" ToRole="DetaljiFakture1" />
+  </EntityType>
+  <Association Name="FK__Faktura1__Korisn__398D8EEE">
+    <End Type="faktureDBModel.Korisnik" Role="Korisnik" Multiplicity="1" />
+    <End Type="faktureDBModel.Faktura1" Role="Faktura1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Korisnik">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Faktura1">
+        <PropertyRef Name="Korisnik" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="DetaljiFakture1">
+    <Key>
+      <PropertyRef Name="Faktura" />
+      <PropertyRef Name="Proizvod" />
+    </Key>
+    <Property Name="Faktura" Type="Int32" Nullable="false" />
+    <Property Name="Proizvod" Type="Int32" Nullable="false" />
+    <Property Name="Cijena" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Kolicina" Type="Int32" />
+    <Property Name="Popust" Type="Int32" />
+    <Property Name="Ukupno" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="Faktura1" Relationship="faktureDBModel.FK__DetaljiFa__Faktu__4222D4EF" FromRole="DetaljiFakture1" ToRole="Faktura1" />
+    <NavigationProperty Name="Popust1" Relationship="faktureDBModel.FK__DetaljiFa__Popus__440B1D61" FromRole="DetaljiFakture1" ToRole="Popust1" />
+    <NavigationProperty Name="Proizvod1" Relationship="faktureDBModel.FK__DetaljiFa__Proiz__4316F928" FromRole="DetaljiFakture1" ToRole="Proizvod" />
+  </EntityType>
+  <Association Name="FK__DetaljiFa__Faktu__4222D4EF">
+    <End Type="faktureDBModel.Faktura1" Role="Faktura1" Multiplicity="1" />
+    <End Type="faktureDBModel.DetaljiFakture1" Role="DetaljiFakture1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Faktura1">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DetaljiFakture1">
+        <PropertyRef Name="Faktura" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DetaljiFa__Popus__440B1D61">
+    <End Type="faktureDBModel.Popust1" Role="Popust1" Multiplicity="0..1" />
+    <End Type="faktureDBModel.DetaljiFakture1" Role="DetaljiFakture1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Popust1">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DetaljiFakture1">
+        <PropertyRef Name="Popust" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DetaljiFa__Proiz__4316F928">
+    <End Type="faktureDBModel.Proizvod" Role="Proizvod" Multiplicity="1" />
+    <End Type="faktureDBModel.DetaljiFakture1" Role="DetaljiFakture1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Proizvod">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DetaljiFakture1">
+        <PropertyRef Name="Proizvod" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

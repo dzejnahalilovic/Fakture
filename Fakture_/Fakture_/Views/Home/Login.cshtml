@@ -1,0 +1,56 @@
+﻿@model Fakture_.Korisnik
+@{
+    ViewBag.Title = "Login";
+}
+
+@{ 
+    Layout = null;
+}
+
+
+@using (Html.BeginForm("Login", "Home", FormMethod.Post))
+{
+<fieldset style="margin:auto; width:50%; background-color:lightgrey">
+    <legend><strong>Prijava</strong></legend>
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @if (@ViewBag.Message != null)
+    {
+
+        <div style="border: 1px solid red">
+            @ViewBag.Message
+        </div>
+    }
+    <div>
+        <p>Korisnicko ime: dzejnah
+           Lozinka: 1234
+        </p>
+    </div>
+    <table>
+        <tr>
+            <td>@Html.Label("Korisnicko ime")</td>
+            <td>@Html.TextBoxFor(a => a.KorisnickoIme)</td>
+            <td>@Html.ValidationMessageFor(a => a.KorisnickoIme)</td>
+        </tr>
+        <tr>
+            <td>
+                @Html.Label("Lozinka")
+            </td>
+            <td>
+                @Html.PasswordFor(a => a.Lozinka)
+            </td>
+            <td>
+                @Html.ValidationMessageFor(a => a.Lozinka)
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" value="Login" />
+            </td>
+            <td></td>
+        </tr>
+    </table>
+</fieldset>
+}
+

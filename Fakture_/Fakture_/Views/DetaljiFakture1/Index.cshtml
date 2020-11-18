@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Fakture_.DetaljiFakture1>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Faktura1.BrojFakture)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Proizvod1.Naziv)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cijena)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Kolicina)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Popust1.Popust)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ukupno)
+        </th>
+
+
+
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Faktura1.BrojFakture)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Proizvod1.Naziv)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Cijena)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Kolicina)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Popust1.Popust)
+    </td>
+    <td>
+    @Html.DisplayFor(modelItem => item.Ukupno)
+    </td>
+
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+    </td>
+</tr>
+}
+
+</table>
